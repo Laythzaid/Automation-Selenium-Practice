@@ -1,0 +1,21 @@
+# Compiled class files
+target/
+*.class
+
+# IDE Settings (IntelliJ & Eclipse)
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+.vscode/
+
+# Log files
+*.log
+logs/
+
+# Test Results (Local reports shouldn't go to GitHub)
+test-output/
+allure-results/
+allure-report/
+extent-reports/
