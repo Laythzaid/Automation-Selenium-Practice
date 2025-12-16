@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Hybrid Regression Suite">
+
+    <listeners>
+        <listener class-name="utilities.TestListener"/>
+    </listeners>
+    <test thread-count="5" name="Register Test">
+        <classes>
+            <class name="testcases.QaRegisterTest"/>
+        </classes>
+    </test>
+    
+    </suite>

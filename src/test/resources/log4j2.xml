@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+	   <Property name="filename">./logs</Property>
+	</Properties>
+
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/> 
+      </Console>
+    
+    <RollingFile name="RollingFile" fileName="${filename}/app.log"
+                 filePattern="${filename}/app-%d{MM-dd-yyyy}.log.gz">
+        <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <Policies>
+            <SizeBasedTriggeringPolicy size="10 KB"/>
+			</Policies>
+		</RollingFile>
+
+	</Appenders>
+
+	<Loggers>
+
+		<Logger name="org.openqa.selenium" level="WARN" additivity="false">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+
+
+		<Logger name="org.apache.http" level="WARN" additivity="false">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+
+		<Logger name="org.apache.logging.log4j" level="WARN" />
+
+		<Logger name="testcases" level="INFO" />
+		<Logger name="base" level="INFO" />
+		<Logger name="utilities" level="INFO" />
+
+		<Root level="WARN">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>
