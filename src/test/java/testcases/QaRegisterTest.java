@@ -1,16 +1,20 @@
 package testcases;
 
+import java.util.Properties;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
 import pages.LoginPage;
+import utilities.ConfigReader;
 
 public class QaRegisterTest extends BaseTest {
 
+//	private Properties Properties;
 	LoginPage login;
 
-	@BeforeMethod
+	@BeforeMethod(dependsOnMethods = { "setUp" })
 	public void init() {
 		login = new LoginPage(driver);
 	}
@@ -30,4 +34,5 @@ public class QaRegisterTest extends BaseTest {
 		login.writePassword("Password@_1234");
 		login.clickLogin();
 	}
+
 }

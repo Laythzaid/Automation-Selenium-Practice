@@ -14,12 +14,12 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.apache.commons.io.file.*;
-import base.BaseTest;
 
 public class ScreenshotUtil {
 	private WebDriver driver;
 
-	private ScreenshotUtil() {}
+	private ScreenshotUtil() {
+	}
 
 	public static String getScreenshot(WebDriver driver, String testName) {
 		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));

@@ -1,9 +1,7 @@
 package utilities;
 
-import static org.testng.Assert.fail;
-
 import java.time.Duration;
-
+import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -11,73 +9,91 @@ import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import base.BaseTest;
-
-public class ElementUtils{
+public class ElementUtils {
 	private WebDriver driver;
-	private static final Logger log = LogManager.getLogger(ElementUtils.class.getName());
- 
+	private WebDriverWait wait;
+	private static final Logger log = LogManager.getLogger(ElementUtils.class);
 
 	public ElementUtils(WebDriver driver) {
 		this.driver = driver;
+		int timeout = Integer.parseInt(ConfigReader.get("explicit.wait"));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 	}
-	public void clickWhenReady(WebElement element, int TimeOut) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TimeOut));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
-	    try {
-		element.click();
-		log.info("Succesfully clicked on element: " + element);
-	    }
-	    catch (Exception e) {
-	    	log.error("Error: Couldn't click element " + element);
-	    	Assert.fail("Couldn't click element " + element);
-	    }
+
+	public void waitForPageLoad() {
+		wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
+				.equals("complete"));
 	}
-	public void type(WebElement element, String Text, int TimeOut) {
-		try 
-		{
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TimeOut));
-		wait.until(ExpectedConditions.visibilityOf(element));
-		element.sendKeys(Text);
-		log.info("typed: " + Text + " In " + element);
-		} catch (Exception e) 
-		{
-	    log.error("Couldn't type in " + element);
-	    Assert.fail("Failed to type in " + element);
+
+	public void clickWithRetry(WebElement element, int attempts) {
+		for (int i = 1; i <= attempts; i++) {
+			try {
+				wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+				return;
+			} catch (Exception e) {
+				log.warn("Retrying click attempt " + i);
+			}
+			throw new RuntimeException("Failed to click after retries");
 		}
-		
-		
 	}
+
+	public void clickWhenReady(By btnLocator, int TimeOut) {
+		wait.until(ExpectedConditions.elementToBeClickable(btnLocator));
+		try {
+			driver.findElement(btnLocator).click();
+			log.info("Succesfully clicked on element: " + btnLocator);
+		} catch (Exception e) {
+			log.error("Error: Couldn't click element " + btnLocator);
+			Assert.fail("Couldn't click element " + btnLocator);
+		}
+
+	}
+
+	public void type(WebElement element, String Text, int TimeOut) {
+		try {
+			wait.until(ExpectedConditions.visibilityOf(element));
+			element.sendKeys(Text);
+			log.info("typed: " + Text + " In " + element);
+		} catch (Exception e) {
+			log.error("Couldn't type in " + element);
+			Assert.fail("Failed to type in " + element);
+		}
+
+	}
+
 	public void jsClick(WebElement element, int timeOut) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		wait.until(ExpectedConditions.visibilityOf(element));
-		JavascriptExecutor js = (JavascriptExecutor) driver; 
+		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", element);
 	}
+
 	public void scrollTo(int pixels) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0, 500)");
 		log.info("Scrolled" + pixels + "pixels");
 	}
-	public void SwitchFrame(WebElement frameElement, int timeOut ) {
+
+	public void SwitchFrame(By frameLocator, int timeOut) {
 		try {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameElement));
-		log.info("Switched to frame: " + frameElement);
-		} catch (Exception e) 
-		{
-		log.error("Couldn't switch to frame: " + frameElement);
-		Assert.fail("Failed to switch to frame " + frameElement);
+			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+			log.info("Switched to frame: " + frameLocator);
+		} catch (Exception e) {
+			log.error("Couldn't switch to frame: " + frameLocator);
+			Assert.fail("Failed to switch to frame " + frameLocator);
 		}
 	}
-	
-	
-	
 
-	
+	public void logCurrentFrame() {
+		try {
+			driver.switchTo().defaultContent();
+			log.info("switched to default content (main page)");
+		} catch (Exception e) {
+			log.error("failed to switch to default content");
+		}
+	}
+
 }
