@@ -23,13 +23,13 @@ public class ScreenshotUtil {
 
 	public static String getScreenshot(WebDriver driver, String testName) {
 		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
-		String path = System.getProperty("user.dir") + "/screenshots" + testName + "_" + timestamp + ".png";
+		String scrpath = System.getProperty("user.dir") + "/screenshots" + testName + "_" + timestamp + ".png";
 		try {
 			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(screenshotFile, new File(path));
+			FileUtils.copyFile(screenshotFile, new File(scrpath));
 		} catch (IOException e) {
 			throw new RuntimeException("Couldn't capture screenshot", e);
 		}
-		return path;
+		return scrpath;
 	}
 }
