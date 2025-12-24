@@ -31,7 +31,7 @@ public abstract class BaseTest {
 
 	@BeforeMethod(alwaysRun = true)
 	public void setUp() throws IOException {
-		log.info("--- Starting Browser Setup ---");
+		log.info("---- Starting Browser Setup ----");
 		driver = DriverFactory.getDriver();
 		driver.get(ConfigReader.get("base.url") + ConfigReader.get("login.url"));
 		driver.manage().window().fullscreen();
