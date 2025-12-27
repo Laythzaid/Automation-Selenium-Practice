@@ -76,3 +76,28 @@ userName=//input[@id='userName']
 password=//input[@id='password']
 recaptchaFrame=//iframe[@title='reCAPTCHA']
 
+## 🚀 Planned Enhancements & Learning Roadmap
+
+This project is actively evolving as part of my test automation learning journey.  
+Planned improvements include:
+
+- **Advanced Reporting**
+  - Integrate **ExtentReports** for rich HTML reports with screenshots and execution metadata
+  - Explore **Allure Reports** for timeline, trend analysis, and CI-friendly reporting
+
+- **CI/CD Enhancements**
+  - Parameterize browser, environment, and execution settings via Jenkins
+  - Improve reporting visibility inside Jenkins builds
+
+- **API Testing Integration**
+  - Add **API test coverage** using REST Assured
+  - Validate backend APIs used by the UI flows
+  - Combine UI + API tests in a single Maven project
+
+- **Framework Improvements**
+  - Improve wait and synchronization strategies
+  - Enhance logging and error handling
+  - Expand test coverage and scenarios
+
+These enhancements will be added incrementally as skills and project maturity grow.
+
