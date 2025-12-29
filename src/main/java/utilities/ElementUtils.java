@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 public class ElementUtils {
 	private WebDriver driver;
@@ -48,7 +48,8 @@ public class ElementUtils {
 			log.info("Succesfully clicked on element: " + btnLocator);
 		} catch (Exception e) {
 			log.error("Error: Couldn't click element " + btnLocator);
-			Assert.fail("Couldn't click element " + btnLocator);
+			throw new RuntimeException("Couldn't click button " + btnLocator, e);
+			
 		}
 
 	}
@@ -60,7 +61,7 @@ public class ElementUtils {
 			log.info("typed: " + Text + " In " + element);
 		} catch (Exception e) {
 			log.error("Couldn't type in " + element);
-			Assert.fail("Failed to type in " + element);
+			throw new RuntimeException("Couldn't type text in " + element, e);
 		}
 
 	}
@@ -83,7 +84,6 @@ public class ElementUtils {
 			log.info("Switched to frame: " + frameLocator);
 		} catch (Exception e) {
 			log.error("Couldn't switch to frame: " + frameLocator);
-			Assert.fail("Failed to switch to frame " + frameLocator);
 		}
 	}
 
@@ -93,6 +93,8 @@ public class ElementUtils {
 			log.info("switched to default content (main page)");
 		} catch (Exception e) {
 			log.error("failed to switch to default content");
+			throw new RuntimeException("Couldn't switch to default content");
+
 		}
 	}
 
