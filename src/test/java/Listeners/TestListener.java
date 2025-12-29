@@ -37,7 +37,10 @@ public class TestListener implements ITestListener {
 		Reporter.log("Screenshot saved at > " + screenshotPath);
 		log.error("!!! TEST FAILED:" + result.getMethod().getMethodName() + "!!!");
 		log.error("!!! TEST FAILED:" + result.getThrowable().getMessage() + "!!!");
-
+		Reporter.log("<br>");
+		Reporter.log("<a href='" + screenshotPath + "' target='_blank'>");
+		Reporter.log("<img src='" + screenshotPath + "' height='400' width='400'/>");
+		Reporter.log("</a>");
 	}
 
 }
