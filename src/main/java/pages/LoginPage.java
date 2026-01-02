@@ -1,11 +1,15 @@
 package pages;
 
+import java.time.Duration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import utilities.ConfigReader;
 import utilities.ElementUtils;
 import utilities.LocatorsUtil;
 
@@ -86,50 +90,43 @@ public class LoginPage {
 		return By.xpath(LocatorsUtil.get("recaptcha"));
 	}
 
-	private By verifyRecFrame() {
-		return By.xpath(LocatorsUtil.get("verifyRecaptchaFrame"));
-
-	}
-
-	private By verifyRec() {
-		return By.id(LocatorsUtil.get("verifyRecaptcha"));
-	}
-
 	// NOTE: CAPTCHA cannot be automated.
 	// Human interaction required for this step in demo environment.
+	
+	public void WaitForCaptchaOrFail(){
+		int timeout;
+		try {
+		timeout = Integer.parseInt(ConfigReader.get("captcha.timeout.seconds"));
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("Invalid captcha timeout in config file");
+		}
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(driver -> {
+				String captchaResult = driver.findElement(recaptcha()).getAttribute("aria-checked"); 
+				return "true".equals(captchaResult);
+				});
+			log.info("Captcha solved");
+		} catch (Exception e) {
+			throw new RuntimeException("Captcha failed to verify");
+			
+		}
+	}
+	
 	public void handleRecaptcha() {
 		log.warn("CAPTCHA requires human interaction. Test is paused.");
+		if(Boolean.parseBoolean(System.getenv("IS_CI"))) {
+			log.warn("Skipping CAPTCHA in CI environment");
+			return;
+		}
 		eleUtils.scrollTo(100);
 
 		eleUtils.logCurrentFrame();
 		eleUtils.SwitchFrame(recaptchaFrame(), 10);
 
 		eleUtils.clickWhenReady(recaptcha(), 5);
+		WaitForCaptchaOrFail();
 
-		while (true) {
-			String captchaResult = driver.findElement(recaptcha()).getAttribute("aria-checked");
-
-			if ("true".equals(captchaResult)) {
-				log.info("CAPTCHA solved");
-				eleUtils.logCurrentFrame();
-				break;
-			}
-
-		}
-
-		try {
-			Thread.sleep(8000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		eleUtils.logCurrentFrame();
-
-		try {
-			eleUtils.SwitchFrame(verifyRecFrame(), 5);
-			eleUtils.clickWhenReady(verifyRec(), 5);
-		} catch (Exception ignore) {
-
-		}
 		eleUtils.logCurrentFrame();
 
 	}
@@ -147,7 +144,7 @@ public class LoginPage {
 	}
 
 	public void clickLogin() {
-		eleUtils.clickWhenReady(loginBtn(), 5);
+		eleUtils.clickWhenReady(loginBtn(), 10);
 	}
 
 }
