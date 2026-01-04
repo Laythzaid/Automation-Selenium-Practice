@@ -14,6 +14,7 @@ This project is meant for learning and portfolio purposes, structured the way re
 - Maven
 - Log4j2
 - Git & GitHub
+- Jenkins
 
 ---
 
@@ -23,19 +24,24 @@ This project is meant for learning and portfolio purposes, structured the way re
 src
 ├── main
 │   └── java
-│       ├── base
-│       │   └── BaseTest.java
+│       │   
 │       ├── pages
-│       │   └── LoginPage.java
+│       │   ├── LoginPage.java
+│       │   │
+│       │   └── RegistrationPage.java
 │       └── utilities
 │           ├── ConfigReader.java
-│           ├── DriverFactory.java
 │           ├── ElementUtils.java
 │           ├── LocatorsUtil.java
 │           └── ScreenshotUtil.java
 │
 ├── test
 │   └── java
+│       │ 
+│       ├── base
+│       │   ├── BaseTest.java
+│       │   └── DriverFactory.java
+│       │
 │       ├── listeners
 │       │   └── TestListener.java
 │       └── testcases
@@ -44,8 +50,9 @@ src
 └── resources
     ├── config.properties
     ├── locators.properties
+    ├──log4j2.xml
     └── testng.xml
-
+    
 
 ---
 
