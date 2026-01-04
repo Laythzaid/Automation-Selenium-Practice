@@ -13,20 +13,20 @@ import utilities.ConfigReader;
 import utilities.ElementUtils;
 import utilities.LocatorsUtil;
 
-public class LoginPage {
+public class RegistrationPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
-	private static final Logger log = LogManager.getLogger(LoginPage.class);
+	private static final Logger log = LogManager.getLogger(RegistrationPage.class);
 
 //	private BaseTest js;
-	public LoginPage(WebDriver driver) {
+	public RegistrationPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
 
 	}
 
 	private By NewUserBtn() {
-		return By.id(LocatorsUtil.get("NewUser"));
+		return By.id(LocatorsUtil.get("register.newUser.id"));
 
 	}
 
@@ -37,7 +37,7 @@ public class LoginPage {
 	}
 
 	private By firstNameField() {
-		return By.xpath(LocatorsUtil.get("firstName"));
+		return By.xpath(LocatorsUtil.get("register.firstname.xpath"));
 	}
 
 	public void writeFirstName(String yourFirstName) {
@@ -46,7 +46,7 @@ public class LoginPage {
 	}
 
 	private By lastNameField() {
-		return By.xpath(LocatorsUtil.get("lastName"));
+		return By.xpath(LocatorsUtil.get("register.lastname.xpath"));
 	}
 
 	public void writeLastName(String yourLastName) {
@@ -55,7 +55,7 @@ public class LoginPage {
 	}
 
 	private By userNameField() {
-		return By.xpath(LocatorsUtil.get("userName"));
+		return By.xpath(LocatorsUtil.get("register.username.xpath"));
 	}
 
 	public void writeUserName(String yourUserName) {
@@ -64,7 +64,7 @@ public class LoginPage {
 	}
 
 	private By password() {
-		return By.xpath(LocatorsUtil.get("password"));
+		return By.xpath(LocatorsUtil.get("register.password.xpath"));
 	}
 
 	public void writePassword(String yourPassword) {
@@ -73,7 +73,7 @@ public class LoginPage {
 	}
 
 	private By registerClick() {
-		return By.xpath(LocatorsUtil.get("register"));
+		return By.xpath(LocatorsUtil.get("register.register.xpath"));
 	}
 
 	public void clickRegister() {
@@ -83,11 +83,11 @@ public class LoginPage {
 
 	// handle Recaptcha Locators
 	private By recaptchaFrame() {
-		return By.xpath(LocatorsUtil.get("recaptchaFrame"));
+		return By.xpath(LocatorsUtil.get("register.recaptchaFrame.xpath"));
 	}
 
 	private By recaptcha() {
-		return By.xpath(LocatorsUtil.get("recaptcha"));
+		return By.xpath(LocatorsUtil.get("register.recaptcha.xpath"));
 	}
 
 	// NOTE: CAPTCHA cannot be automated.
@@ -132,7 +132,7 @@ public class LoginPage {
 	}
 
 	private By backToLoginBtn() {
-		return By.xpath(LocatorsUtil.get("backToLogin"));
+		return By.xpath(LocatorsUtil.get("register.backTologin.xpath"));
 	}
 
 	public void goToLogin() {
@@ -140,7 +140,7 @@ public class LoginPage {
 	}
 
 	private By loginBtn() {
-		return By.xpath(LocatorsUtil.get("loginBtn"));
+		return By.xpath(LocatorsUtil.get("register.loginbtn.xpath"));
 	}
 
 	public void clickLogin() {
