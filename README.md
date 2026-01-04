@@ -68,6 +68,10 @@ browser=chrome
 base.url=https://demoqa.com
 login.url=/login
 
+Values can be overridden via Jenkins or Maven command line:
+```bash
+mvn test -Dbrowser=chrome -Durl=https://demoqa.com/books
+
 ### `locators.properties` (sample)
 
 ```properties
@@ -75,6 +79,24 @@ loginBtn=//button[@id='login']
 userName=//input[@id='userName']
 password=//input[@id='password']
 recaptchaFrame=//iframe[@title='reCAPTCHA']
+
+## CI Detection
+
+The framework detects CI execution using environment variables.
+
+When running in Jenkins, the environment variable `IS_CI` is used to control
+CI-specific behavior such as handling CAPTCHA-based flows.
+
+Example:
+```java
+Boolean.parseBoolean(System.getenv("IS_CI"))
+
+
+## Known Limitations
+
+- Some flows (e.g. CAPTCHA-protected actions) require human interaction.
+- When executed in CI (detected via `IS_CI` environment variable), these flows
+  are logged and handled with timeouts or skipped to avoid pipeline blockage.
 
 ## 🚀 Planned Enhancements & Learning Roadmap
 
@@ -85,14 +107,14 @@ Planned improvements include:
   - Integrate **ExtentReports** for rich HTML reports with screenshots and execution metadata
   - Explore **Allure Reports** for timeline, trend analysis, and CI-friendly reporting
 
-- **CI/CD Enhancements**
-  - Parameterize browser, environment, and execution settings via Jenkins
-  - Improve reporting visibility inside Jenkins builds
-
 - **API Testing Integration**
   - Add **API test coverage** using REST Assured
   - Validate backend APIs used by the UI flows
   - Combine UI + API tests in a single Maven project
+
+- **CI/CD Enhancements**
+  - Parameterize browser, environment, and execution settings via Jenkins
+  - Improve reporting visibility inside Jenkins builds
 
 - **Framework Improvements**
   - Improve wait and synchronization strategies
