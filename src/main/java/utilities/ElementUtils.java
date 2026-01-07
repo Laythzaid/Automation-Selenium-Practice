@@ -1,13 +1,13 @@
 package utilities;
 
 import java.time.Duration;
-import java.util.Properties;
+import java.util.function.Function;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,6 +22,31 @@ public class ElementUtils {
 		this.driver = driver;
 		int timeout = Integer.parseInt(ConfigReader.get("explicit.wait"));
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+	}	
+	public void waitForCondition(Function<WebDriver, Boolean> condition, String failureMessege) {
+		try {
+			wait.until(condition);
+		} catch(TimeoutException e) {
+			throw new RuntimeException(failureMessege);
+		}
+	}
+	
+	public WebElement waitForVisibility(By locator) {
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+	
+	public WebElement waitForClickable(By locator) {
+		return wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
+	
+	//new
+	public boolean isDisplayed(By locator, int timeout) {
+		try {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		return true;
+		} catch (TimeoutException e){
+			return false;
+		}
 	}
 
 	public void waitForPageLoad() {
@@ -29,10 +54,10 @@ public class ElementUtils {
 				.equals("complete"));
 	}
 
-	public void clickWithRetry(WebElement element, int attempts) {
+	public void clickWithRetry(By locator, int attempts) {
 		for (int i = 1; i <= attempts; i++) {
 			try {
-				wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+				wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
 				return;
 			} catch (Exception e) {
 				log.warn("Retrying click attempt " + i);
@@ -54,22 +79,21 @@ public class ElementUtils {
 
 	}
 
-	public void type(WebElement element, String Text, int TimeOut) {
+	public void type(By locator, String Text, int TimeOut) {
 		try {
-			wait.until(ExpectedConditions.visibilityOf(element));
-			element.sendKeys(Text);
-			log.info("typed: " + Text + " In " + element);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(Text);
+			log.info("typed: " + Text + " In " + locator);
 		} catch (Exception e) {
-			log.error("Couldn't type in " + element);
-			throw new RuntimeException("Couldn't type text in " + element, e);
+			log.error("Couldn't type in " + locator);
+			throw new RuntimeException("Couldn't type text in " + locator, e);
 		}
 
 	}
 
-	public void jsClick(WebElement element, int timeOut) {
-		wait.until(ExpectedConditions.visibilityOf(element));
+	public void jsClick(By locators, int timeOut) {
+		WebElement locs = wait.until(ExpectedConditions.visibilityOfElementLocated(locators));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", element);
+		js.executeScript("arguments[0].click();", locs);
 	}
 
 	public void scrollTo(int pixels) {
