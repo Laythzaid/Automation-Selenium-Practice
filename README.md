@@ -58,12 +58,13 @@ src
 
 ## Key Design Decisions
 
-- **Page Object Model (POM)** for maintainability
-- **By locators instead of WebElement** to avoid stale element issues
-- **DriverFactory with ThreadLocal WebDriver** for scalability
-- **Centralized waits & actions** via ElementUtils
-- **Externalized configuration** using properties files
+- **Page Object Model (POM)** to seperate test logic from UI structure and improve maintainability
+- **By locators instead of WebElement** to avoid stale element issues and improve stability
+- **DriverFactory with ThreadLocal WebDriver** to support parallel execution and CI scalability
+- **Centralized waits & actions** via a reusable ElementUtils layer
+- **Externalized configuration & properties** using properties files
 - **Listeners for screenshots & logging on failures**
+- **Data-driven test cases using TestNG DataProviders to cover positive and negative scenarios without code duplication**
 
 ---
 
@@ -82,10 +83,17 @@ mvn test -Dbrowser=chrome -Durl=https://demoqa.com/books
 ### `locators.properties` (sample)
 
 ```properties
-loginBtn=//button[@id='login']
-userName=//input[@id='userName']
-password=//input[@id='password']
-recaptchaFrame=//iframe[@title='reCAPTCHA']
+# Register Page
+register.newUser.id =newUser
+register.username.css =#userName
+register.password.css =#password
+register.recaptchaFrame.xpath =//iframe [@title = 'reCAPTCHA']
+
+# Form Submission Page
+login.userName.css = #userName
+login.email.css = #userEmail
+login.currentAddress.css = #currentAddress
+login.submit.css = #submit
 
 ## CI Detection
 
@@ -124,9 +132,11 @@ Planned improvements include:
   - Improve reporting visibility inside Jenkins builds
 
 - **Framework Improvements**
-  - Improve wait and synchronization strategies
-  - Enhance logging and error handling
-  - Expand test coverage and scenarios
+  - Enhance synchronization strategies using condition-based and state-aware waits
+  - Reduce reliance on static waits by improving custom and reusable wait utilities
+  - Improve logging, exception handling, and failure diagnostics
+  - Expand test coverage and supported test scenarios
+
 
 These enhancements will be added incrementally as skills and project maturity grow.
 
