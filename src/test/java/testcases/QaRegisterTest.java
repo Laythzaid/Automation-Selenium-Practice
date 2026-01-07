@@ -1,38 +1,38 @@
 package testcases;
 
-import java.util.Properties;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
-import pages.LoginPage;
+import pages.RegistrationPage;
 import utilities.ConfigReader;
+import utilities.ElementUtils;
 
 public class QaRegisterTest extends BaseTest {
 
 //	private Properties Properties;
-	LoginPage login;
+	RegistrationPage register;
+	ElementUtils eleUtils;
 
-	@BeforeMethod(dependsOnMethods = { "setUp" })
+	@BeforeMethod(alwaysRun = true, dependsOnMethods = {"setUp"})
 	public void init() {
-		login = new LoginPage(driver);
+		register = new RegistrationPage(driver);
+	    navigateTo("login.url");
 	}
-
 	@Test
 	public void test() throws InterruptedException {
 
-		login.clickNewUser();
-		login.writeFirstName("Layth");
-		login.writeLastName("Zaid");
-		login.writeUserName("LarryZaid");
-		login.writePassword("Password@_1234");
-		login.handleRecaptcha();
-		login.clickRegister();
-		login.goToLogin();
-		login.writeUserName("LarryZaid");
-		login.writePassword("Password@_1234");
-		login.clickLogin();
+		register.clickNewUser();
+		register.writeFirstName("Layth");
+		register.writeLastName("Zaid");
+		register.writeUserName("LarryZaid");
+		register.writePassword("Password@_1234");
+		register.handleRecaptcha();
+		register.clickRegister();
+		register.goToLogin();
+		register.writeUserName("LarryZaid");
+		register.writePassword("Password@_1234");
+		register.clickLogin();
 	}
 
 }

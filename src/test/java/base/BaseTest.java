@@ -17,18 +17,20 @@ public abstract class BaseTest {
 	private ElementUtils eleutils;
 	protected Logger log = LogManager.getLogger(getClass());
 	
-	public void navigateTo(String urlKey) {
-		driver.get(ConfigReader.get("base.url") + ConfigReader.get(urlKey));
-	}
+
 
 	@BeforeMethod(alwaysRun = true)
 	public void setUp() throws IOException {
 		log.info("---- Starting Browser Setup ----");
 		driver = DriverFactory.getDriver();
-		driver.get(ConfigReader.get("base.url") + ConfigReader.get("login.url"));
+		driver.get(ConfigReader.get("base.url"));
 		driver.manage().window().fullscreen();
 		eleutils = new ElementUtils(driver);
 		eleutils.waitForPageLoad();
+	}
+	protected void navigateTo(String urlKey) {
+		driver.get(ConfigReader.get("base.url") + ConfigReader.get(urlKey));
+		driver.manage().window().maximize();
 	}
 
 	@AfterTest
