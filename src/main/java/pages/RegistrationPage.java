@@ -25,70 +25,55 @@ public class RegistrationPage {
 
 	}
 
-	private By NewUserBtn() {
-		return By.id(LocatorsUtil.get("register.newUser.id"));
-
-	}
+	
+	private By NewUserBtn = By.id(LocatorsUtil.get("register.newUser.id"));
+	
 
 	public void clickNewUser() {
 		eleUtils.scrollTo(500);
-		eleUtils.clickWhenReady(NewUserBtn(), 5);
+		eleUtils.clickWhenReady(NewUserBtn, 5);
 		eleUtils.scrollTo(500);
 	}
 
-	private By firstNameField() {
-		return By.xpath(LocatorsUtil.get("register.firstname.xpath"));
-	}
+	private By firstNameField = By.cssSelector(LocatorsUtil.get("register.firstname.css"));
+	
 
 	public void writeFirstName(String yourFirstName) {
-		WebElement firstName = driver.findElement(firstNameField());
-		eleUtils.type(firstName, yourFirstName, 5);
+		eleUtils.type(firstNameField, yourFirstName, 5);
 	}
 
-	private By lastNameField() {
-		return By.xpath(LocatorsUtil.get("register.lastname.xpath"));
-	}
+	private By lastNameField = By.cssSelector(LocatorsUtil.get("register.lastname.css"));
+	
 
 	public void writeLastName(String yourLastName) {
-		WebElement lastName = driver.findElement(lastNameField());
-		eleUtils.type(lastName, yourLastName, 5);
+		eleUtils.type(lastNameField, yourLastName, 5);
 	}
 
-	private By userNameField() {
-		return By.xpath(LocatorsUtil.get("register.username.xpath"));
-	}
+	private By userNameField = By.cssSelector(LocatorsUtil.get("register.username.css"));
+	
 
 	public void writeUserName(String yourUserName) {
-		WebElement userName = driver.findElement(userNameField());
-		eleUtils.type(userName, yourUserName, 5);
+		eleUtils.type(userNameField, yourUserName, 5);
 	}
 
-	private By password() {
-		return By.xpath(LocatorsUtil.get("register.password.xpath"));
-	}
+	private By password = By.cssSelector(LocatorsUtil.get("register.password.css"));
 
 	public void writePassword(String yourPassword) {
-		WebElement passwordField = driver.findElement(password());
-		eleUtils.type(passwordField, yourPassword, 3);
+		eleUtils.type(password, yourPassword, 3);
 	}
 
-	private By registerClick() {
-		return By.xpath(LocatorsUtil.get("register.register.xpath"));
-	}
+	private By registerClick = By.cssSelector(LocatorsUtil.get("register.register.css"));
+	
 
 	public void clickRegister() {
-		WebElement register = driver.findElement(registerClick());
-		eleUtils.jsClick(register, 3);
+		eleUtils.jsClick(registerClick, 3);
 	}
 
 	// handle Recaptcha Locators
-	private By recaptchaFrame() {
-		return By.xpath(LocatorsUtil.get("register.recaptchaFrame.xpath"));
-	}
+	private By recaptchaFrame = By.xpath(LocatorsUtil.get("register.recaptchaFrame.xpath"));
+	
 
-	private By recaptcha() {
-		return By.xpath(LocatorsUtil.get("register.recaptcha.xpath"));
-	}
+	private By recaptcha = By.cssSelector(LocatorsUtil.get("register.recaptcha.css"));
 
 	// NOTE: CAPTCHA cannot be automated.
 	// Human interaction required for this step in demo environment.
@@ -103,7 +88,7 @@ public class RegistrationPage {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
 			wait.until(driver -> {
-				String captchaResult = driver.findElement(recaptcha()).getAttribute("aria-checked"); 
+				String captchaResult = driver.findElement(recaptcha).getAttribute("aria-checked"); 
 				return "true".equals(captchaResult);
 				});
 			log.info("Captcha solved");
@@ -122,29 +107,28 @@ public class RegistrationPage {
 		eleUtils.scrollTo(100);
 
 		eleUtils.logCurrentFrame();
-		eleUtils.SwitchFrame(recaptchaFrame(), 10);
+		eleUtils.SwitchFrame(recaptchaFrame, 15);
 
-		eleUtils.clickWhenReady(recaptcha(), 5);
+		eleUtils.clickWhenReady(recaptcha, 15);
 		WaitForCaptchaOrFail();
 
 		eleUtils.logCurrentFrame();
 
 	}
 
-	private By backToLoginBtn() {
-		return By.xpath(LocatorsUtil.get("register.backTologin.xpath"));
-	}
+	private By backToLoginBtn = By.cssSelector(LocatorsUtil.get("register.back.to.login.css"));
+	
 
 	public void goToLogin() {
-		eleUtils.clickWhenReady(backToLoginBtn(), 5);
+		eleUtils.clickWhenReady(backToLoginBtn, 10);
 	}
 
-	private By loginBtn() {
-		return By.xpath(LocatorsUtil.get("register.loginbtn.xpath"));
-	}
+	private By loginBtn = By.cssSelector(LocatorsUtil.get("register.login.button.css"));
+	
 
 	public void clickLogin() {
-		eleUtils.clickWhenReady(loginBtn(), 10);
+		eleUtils.scrollTo(200);
+		eleUtils.clickWhenReady(loginBtn, 10);
 	}
 
 }
