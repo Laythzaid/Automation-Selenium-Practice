@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LocatorsUtil {
@@ -26,9 +25,10 @@ public class LocatorsUtil {
 
 	}
 
-	public static String get(String locatorKey) {
+	public static String get(String locatorKey) {		
+		
 		String value = properties.getProperty(locatorKey);
-		if (locatorKey == null) {
+		if (value == null) {
 			throw new RuntimeException("locator not found for key" + locatorKey);
 		}
 		return value;
