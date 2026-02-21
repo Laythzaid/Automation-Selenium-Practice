@@ -35,7 +35,7 @@ public class RegistrationPage {
 
 	public void pageNav(){
 		eleUtils.clickWhenReady(elementNav, 5);
-		eleUtils.scrollTo(500);
+		eleUtils.scrollTo(700);
 		eleUtils.clickWhenReady(bookStoreGenNav, 10);
 		eleUtils.clickWhenReady(bookStoreLoginNav, 5);
 	}
