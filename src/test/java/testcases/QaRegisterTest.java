@@ -16,12 +16,11 @@ public class QaRegisterTest extends BaseTest {
 	@BeforeMethod(alwaysRun = true, dependsOnMethods = {"setUp"})
 	public void init() {
 		register = new RegistrationPage(driver);
-	   
+		register.pageNav();
 	}
 	@Test
 	public void test() {
 
-		register.pageNav();
 		register.clickNewUser();
 		register.writeFirstName("Layth");
 		register.writeLastName("Zaid");
