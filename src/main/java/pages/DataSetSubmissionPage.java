@@ -1,41 +1,32 @@
 package pages;
 
-import javax.xml.xpath.XPath;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByCssSelector;
-import org.testng.internal.BaseTestMethod;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import utilities.ElementUtils;
 import utilities.LocatorsUtil;
 
-public class FormSubmissionPage {
+public class DataSetSubmissionPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
 	private By elementNav;
-	private By formGenNav;
-	private By formNav;
+	private By textBoxNav;
 
 	
 	
-	public FormSubmissionPage(WebDriver driver) {
+	public DataSetSubmissionPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
 		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
-		formGenNav = By.xpath(LocatorsUtil.get("nav.formGen"));
-		formNav = By.xpath(LocatorsUtil.get("nav.form"));
-
+		textBoxNav = By.xpath(LocatorsUtil.get("nav.TextBox"));
 	}
  
 	public void pageNav() {
 		eleUtils.clickWhenReady(elementNav, 5);
-		eleUtils.scrollTo(500);
-		eleUtils.clickWhenReady(formGenNav, 10);
-		eleUtils.clickWhenReady(formNav, 5);
+		eleUtils.clickWhenReady(textBoxNav, 10);
 	}
-	private By fullName = By.cssSelector(LocatorsUtil.get("login.userName.css"));
+	private By fullName = By.id(LocatorsUtil.get("login.userName.id"));
     
 	private By emailField = By.cssSelector(LocatorsUtil.get("login.email.css"));
 

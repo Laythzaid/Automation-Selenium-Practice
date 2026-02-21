@@ -6,20 +6,21 @@ import org.testng.annotations.Test;
 
 import base.BaseTest;
 import dataProviders.UsersInfoDataProvider;
-import pages.FormSubmissionPage;
+import pages.DataSetSubmissionPage;
 
-public class InsertUsersInfo extends BaseTest {
+public class UsersSubmissionDataProv extends BaseTest {
 	
-	FormSubmissionPage login;
+	DataSetSubmissionPage login;
 	
 	@BeforeMethod(alwaysRun = true)
 	public void init() {
-		login = new FormSubmissionPage(driver);
-		login.pageNav();
+		login = new DataSetSubmissionPage(driver);
+		
 	}
 
 	@Test(dataProvider = "UsersInfoDataProvider", dataProviderClass = UsersInfoDataProvider.class)
-	public void InsertUserDetails( String name, String email, String UserCurtAddr, String UserPermAddr, boolean shouldPass) {
+	public void InsertUserData( String name, String email, String UserCurtAddr, String UserPermAddr, boolean shouldPass) {
+		login.pageNav();
 		login.insertUserDetails(name, email, UserCurtAddr, UserPermAddr, shouldPass);
 		
 	    if(shouldPass) {
