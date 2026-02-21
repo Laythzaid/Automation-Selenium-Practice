@@ -15,7 +15,7 @@ public class InsertUsersInfo extends BaseTest {
 	@BeforeMethod(alwaysRun = true)
 	public void init() {
 		login = new FormSubmissionPage(driver);
-		navigateTo("user.info.url");
+		login.pageNav();
 	}
 
 	@Test(dataProvider = "UsersInfoDataProvider", dataProviderClass = UsersInfoDataProvider.class)

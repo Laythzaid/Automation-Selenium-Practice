@@ -11,19 +11,30 @@ import org.openqa.selenium.WebElement;
 import utilities.ElementUtils;
 import utilities.LocatorsUtil;
 
-public class LoginPage {
+public class FormSubmissionPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
+	private By elementNav;
+	private By formGenNav;
+	private By formNav;
+
 	
 	
-	
-	public LoginPage(WebDriver driver) {
+	public FormSubmissionPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
-		
+		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
+		formGenNav = By.xpath(LocatorsUtil.get("nav.formGen"));
+		formNav = By.xpath(LocatorsUtil.get("nav.form"));
+
 	}
-	
-	
+ 
+	public void pageNav() {
+		eleUtils.clickWhenReady(elementNav, 5);
+		eleUtils.scrollTo(500);
+		eleUtils.clickWhenReady(formGenNav, 10);
+		eleUtils.clickWhenReady(formNav, 5);
+	}
 	private By fullName = By.cssSelector(LocatorsUtil.get("login.userName.css"));
     
 	private By emailField = By.cssSelector(LocatorsUtil.get("login.email.css"));

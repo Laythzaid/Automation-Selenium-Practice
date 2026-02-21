@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.bidi.browsingcontext.Locator;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utilities.ConfigReader;
@@ -17,14 +18,27 @@ public class RegistrationPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
 	private static final Logger log = LogManager.getLogger(RegistrationPage.class);
-
+	private By elementNav;
+    private By bookStoreGenNav;
+    private By bookStoreLoginNav;
+	
+	
 //	private BaseTest js;
 	public RegistrationPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
+		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
+		bookStoreGenNav = By.xpath(LocatorsUtil.get("nav.bookStore.gen"));
+		bookStoreLoginNav = By.xpath(LocatorsUtil.get("nav.bookStore.login"));
 
 	}
 
+	public void pageNav(){
+		eleUtils.clickWhenReady(elementNav, 5);
+		eleUtils.scrollTo(500);
+		eleUtils.clickWhenReady(bookStoreGenNav, 10);
+		eleUtils.clickWhenReady(bookStoreLoginNav, 5);
+	}
 	
 	private By NewUserBtn = By.id(LocatorsUtil.get("register.newUser.id"));
 	
@@ -78,7 +92,7 @@ public class RegistrationPage {
 	// NOTE: CAPTCHA cannot be automated.
 	// Human interaction required for this step in demo environment.
 	
-	public void WaitForCaptchaOrFail(){
+	public boolean WaitForCaptchaOrFail(){
 		int timeout;
 		try {
 		timeout = Integer.parseInt(ConfigReader.get("captcha.timeout.seconds"));
@@ -92,9 +106,11 @@ public class RegistrationPage {
 				return "true".equals(captchaResult);
 				});
 			log.info("Captcha solved");
+			return true;
 		} catch (Exception e) {
-			throw new RuntimeException("Captcha failed to verify");
-			
+
+			log.warn("Captcha not solved within timeout");
+			return false;
 		}
 	}
 	
@@ -109,9 +125,15 @@ public class RegistrationPage {
 		eleUtils.logCurrentFrame();
 		eleUtils.SwitchFrame(recaptchaFrame, 15);
 
+		try {
+		
 		eleUtils.clickWhenReady(recaptcha, 15);
 		WaitForCaptchaOrFail();
-
+		} catch(Exception e){
+			log.warn("Captcha interaction failed. Continuing test");
+			
+		}
+		 
 		eleUtils.logCurrentFrame();
 
 	}

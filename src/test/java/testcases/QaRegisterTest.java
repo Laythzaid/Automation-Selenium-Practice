@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 
 import base.BaseTest;
 import pages.RegistrationPage;
-import utilities.ConfigReader;
 import utilities.ElementUtils;
 
 public class QaRegisterTest extends BaseTest {
@@ -17,11 +16,12 @@ public class QaRegisterTest extends BaseTest {
 	@BeforeMethod(alwaysRun = true, dependsOnMethods = {"setUp"})
 	public void init() {
 		register = new RegistrationPage(driver);
-	    navigateTo("login.url");
+	   
 	}
 	@Test
-	public void test() throws InterruptedException {
+	public void test() {
 
+		register.pageNav();
 		register.clickNewUser();
 		register.writeFirstName("Layth");
 		register.writeLastName("Zaid");
