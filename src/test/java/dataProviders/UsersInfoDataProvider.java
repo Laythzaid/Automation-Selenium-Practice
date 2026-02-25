@@ -12,7 +12,7 @@ public class UsersInfoDataProvider {
 			{"Sloppery Slope", "Slopzzbobs@hubs.oke", "Bethlehm, Palestine", "Palestine", true},
 			{"", "dasd@hotmail.com", "", "", true},
 			{"Glumpy Glimpse", "garbageEmail", "Glumps", "Glumps forever", false},
-			{"Jermy Sueko", null, "Jogja, Indonesia", "Phillipnes", false},
+			{"Jermy Sueko", " ", "Jogja, Indonesia", "Phillipnes", false},
 			{"Ryry Hang", "ThearyHan0@here.com", "Bali, Indonesia", "Cambodia", true}
 
 		};

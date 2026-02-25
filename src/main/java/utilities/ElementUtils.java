@@ -18,6 +18,8 @@ public class ElementUtils {
 	private WebDriverWait wait;
 	private static final Logger log = LogManager.getLogger(ElementUtils.class);
 
+	 
+			
 	public ElementUtils(WebDriver driver) {
 		this.driver = driver;
 		int timeout = Integer.parseInt(ConfigReader.get("explicit.wait"));
@@ -30,6 +32,8 @@ public class ElementUtils {
 			throw new RuntimeException(failureMessege);
 		}
 	}
+	
+
 	
 	public WebElement waitForVisibility(By locator) {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -67,9 +71,14 @@ public class ElementUtils {
 	}
 
 	public void clickWhenReady(By btnLocator, int TimeOut) {
-		wait.until(ExpectedConditions.elementToBeClickable(btnLocator));
+		WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(btnLocator));
+		
+//		((JavascriptExecutor) driver)
+//        .executeScript("arguments[0].scrollIntoView({block: 'center'});",  btn);
+//		log.info("scrolled into view, element : " + btn );
+		
 		try {
-			driver.findElement(btnLocator).click();
+			btn.click();
 			log.info("Succesfully clicked on element: " + btnLocator);
 		} catch (Exception e) {
 			log.error("Error: Couldn't click element " + btnLocator);
@@ -101,7 +110,14 @@ public class ElementUtils {
 		js.executeScript("window.scrollBy(0, 500)");
 		log.info("Scrolled" + pixels + "pixels");
 	}
+	
+	public void scrollToBottom() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		log.info("Scrolled to the bottom");
+	}
 
+	
 	public void SwitchFrame(By frameLocator, int timeOut) {
 		try {
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));

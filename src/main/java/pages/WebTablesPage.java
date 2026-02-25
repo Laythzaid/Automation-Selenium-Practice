@@ -32,12 +32,14 @@ public class WebTablesPage {
 	private By searchBar = By.cssSelector(LocatorsUtil.get("table.search.css"));
 	
 	public void search(String searchData) {
+		driver.findElement(searchBar).clear();
 		eleUtils.type(searchBar, searchData, 5);
 	}
 	
 	private By deleteBtn = By.cssSelector(LocatorsUtil.get("table.deleteRecord.css")); 
 	
 	public void deleteRecord() {
+		eleUtils.scrollTo(200);
 		eleUtils.clickWhenReady(deleteBtn, 10);
 	}
 
@@ -76,23 +78,20 @@ public class WebTablesPage {
 	}
 	public void writeEmail(String empEmail) {
 		driver.findElement(emailField).clear();
-		eleUtils.type(lastNameField, empEmail, 5);
+		eleUtils.type(emailField, empEmail, 5);
 	}
 	public void writeAge(String empAge) {
 		driver.findElement(ageField).clear();
-		eleUtils.type(lastNameField, empAge, 5);
+		eleUtils.type(ageField, empAge, 5);
 	}
 	public void writeSalary(String salary) {
-		//clearing the textfield by clicking twice before typing
-		for(int i = 1; i <= 2;) {
-		eleUtils.clickWhenReady(salaryField, 5);
-		i++;
-	 }
+
+		driver.findElement(salaryField).clear();
 		eleUtils.type(salaryField, salary, 5);
 	}
 	public void writeDepartment(String empDepartment) {
 		driver.findElement(departmentField).clear();
-		eleUtils.type(lastNameField, empDepartment, 5);
+		eleUtils.type(departmentField, empDepartment, 5);
 	}
 	
 	private By submitBtn = By.cssSelector(LocatorsUtil.get("table.submit.css"));

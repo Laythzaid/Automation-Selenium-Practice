@@ -1,18 +1,12 @@
 package Listeners;
 
-import java.io.IOException;
-
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
-import base.BaseTest;
 import base.DriverFactory;
-import testcases.QaRegisterTest;
 import utilities.ScreenshotUtil;
 
 public class TestListener implements ITestListener {

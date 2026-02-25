@@ -14,13 +14,13 @@ public class QaRegisterTest extends BaseTest {
 	ElementUtils eleUtils;
 
 	@BeforeMethod(alwaysRun = true, dependsOnMethods = {"setUp"})
-	public void init() {
+	public void init() throws InterruptedException {
 		register = new RegistrationPage(driver);
 		register.pageNav();
+
 	}
 	@Test
-	public void test() {
-
+	public void test(){
 		register.clickNewUser();
 		register.writeFirstName("Layth");
 		register.writeLastName("Zaid");

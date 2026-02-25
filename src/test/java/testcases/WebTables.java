@@ -19,7 +19,7 @@ public class WebTables extends BaseTest{
 	}
 	
 	@Test
-	public void tableData() {
+	public void tableData() throws InterruptedException {
 		table.search("Cie");
 		table.deleteRecord();
 		table.resetSearch();
@@ -35,6 +35,8 @@ public class WebTables extends BaseTest{
 		table.writeSalary("8000");
 		table.writeDepartment("Content creation");
 		table.submitData();
+		table.search("ear");
+
 	}
 	
 
