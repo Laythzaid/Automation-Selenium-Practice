@@ -16,7 +16,8 @@ public class QaRegisterTest extends BaseTest {
 	@BeforeMethod(alwaysRun = true, dependsOnMethods = {"setUp"})
 	public void init() throws InterruptedException {
 		register = new RegistrationPage(driver);
-		register.pageNav();
+		navigateTo("login.url");
+//		register.pageNav();
 
 	}
 	@Test

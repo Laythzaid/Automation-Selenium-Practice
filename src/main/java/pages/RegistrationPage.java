@@ -18,27 +18,31 @@ public class RegistrationPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
 	private static final Logger log = LogManager.getLogger(RegistrationPage.class);
-	private By elementNav;
-    private By bookStoreGenNav;
-    private By bookStoreLoginNav;
+//	private By elementNav;
+//    private By bookStoreGenNav;
+//    private By bookStoreLoginNav;
 	
 	
 //	private BaseTest js;
 	public RegistrationPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
-		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
-		bookStoreGenNav = By.xpath(LocatorsUtil.get("nav.bookStore.gen"));
-		bookStoreLoginNav = By.xpath(LocatorsUtil.get("nav.bookStore.login"));
+//		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
+//		bookStoreGenNav = By.xpath(LocatorsUtil.get("nav.bookStore.gen"));
+//		bookStoreLoginNav = By.xpath(LocatorsUtil.get("nav.bookStore.login"));
 
 	}
-
-	public void pageNav(){
-		eleUtils.clickWhenReady(elementNav, 5);
-		eleUtils.scrollTo(500);
-		eleUtils.jsClick(bookStoreGenNav, 10);
-		eleUtils.clickWhenReady(bookStoreLoginNav, 5);
+	
+	public void OpenRegistrationPage() {
+		
 	}
+
+//	public void pageNav(){
+//		eleUtils.clickWhenReady(elementNav, 5);
+//		eleUtils.scrollTo(500);
+//		eleUtils.jsClick(bookStoreGenNav, 10);
+//		eleUtils.clickWhenReady(bookStoreLoginNav, 5);
+//	}
 	
 	private By NewUserBtn = By.id(LocatorsUtil.get("register.newUser.id"));
 	

@@ -10,22 +10,22 @@ import utilities.LocatorsUtil;
 public class DataSetSubmissionPage {
 	private WebDriver driver;
 	private ElementUtils eleUtils;
-	private By elementNav;
-	private By textBoxNav;
+//	private By elementNav;
+//	private By textBoxNav;
 
 	
 	
 	public DataSetSubmissionPage(WebDriver driver) {
 		this.driver = driver;
 		this.eleUtils = new ElementUtils(driver);
-		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
-		textBoxNav = By.xpath(LocatorsUtil.get("nav.TextBox"));
+//		elementNav = By.xpath(LocatorsUtil.get("nav.elements"));
+//		textBoxNav = By.xpath(LocatorsUtil.get("nav.TextBox"));
 	}
  
-	public void pageNav() {
-		eleUtils.clickWhenReady(elementNav, 5);
-		eleUtils.clickWhenReady(textBoxNav, 10);
-	}
+//	public void pageNav() {
+//		eleUtils.clickWhenReady(elementNav, 5);
+//		eleUtils.clickWhenReady(textBoxNav, 10);
+//	}
 	private By fullName = By.id(LocatorsUtil.get("login.userName.id"));
     
 	private By emailField = By.cssSelector(LocatorsUtil.get("login.email.css"));

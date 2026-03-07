@@ -15,7 +15,8 @@ public class WebTables extends BaseTest{
 	@BeforeMethod(alwaysRun = true)
 	public void init(){
 	table = new WebTablesPage(driver);
-	table.webTablesNav();
+	navigateTo("tables.url");
+//	table.webTablesNav();
 	}
 	
 	@Test

@@ -15,12 +15,12 @@ public class UsersSubmissionDataProv extends BaseTest {
 	@BeforeMethod(alwaysRun = true)
 	public void init() {
 		login = new DataSetSubmissionPage(driver);
-		
+		navigateTo("user.info.url");
 	}
 
 	@Test(dataProvider = "UsersInfoDataProvider", dataProviderClass = UsersInfoDataProvider.class)
 	public void InsertUserData( String name, String email, String UserCurtAddr, String UserPermAddr, boolean shouldPass) {
-		login.pageNav();
+//		login.pageNav();
 		login.insertUserDetails(name, email, UserCurtAddr, UserPermAddr, shouldPass);
 		
 	    if(shouldPass) {
