@@ -73,9 +73,9 @@ public class ElementUtils {
 	public void clickWhenReady(By btnLocator, int TimeOut) {
 		WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(btnLocator));
 		
-//		((JavascriptExecutor) driver)
-//        .executeScript("arguments[0].scrollIntoView({block: 'center'});",  btn);
-//		log.info("scrolled into view, element : " + btn );
+		((JavascriptExecutor) driver)
+        .executeScript("arguments[0].scrollIntoView({block: 'center'});",  btn);
+		log.info("scrolled into view, element : " + btn );
 		
 		try {
 			btn.click();

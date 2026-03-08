@@ -26,6 +26,7 @@ public class DataSetSubmissionPage {
 //		eleUtils.clickWhenReady(elementNav, 5);
 //		eleUtils.clickWhenReady(textBoxNav, 10);
 //	}
+	
 	private By fullName = By.id(LocatorsUtil.get("login.userName.id"));
     
 	private By emailField = By.cssSelector(LocatorsUtil.get("login.email.css"));
@@ -41,7 +42,7 @@ public class DataSetSubmissionPage {
 		eleUtils.type(emailField, email, 5);
 		eleUtils.type(currentAddress, UserCurtAddr, 5);
 		eleUtils.type(permenantAddress, UserPermAdrr, 5);
-		eleUtils.scrollTo(100);
+//		eleUtils.scrollTo(100);
 		eleUtils.clickWhenReady(submitButton, 5);
 	}
 	
