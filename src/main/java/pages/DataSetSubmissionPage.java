@@ -1,8 +1,12 @@
 package pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utilities.ElementUtils;
 import utilities.LocatorsUtil;
@@ -37,13 +41,19 @@ public class DataSetSubmissionPage {
 	
 	private By submitButton = By.cssSelector(LocatorsUtil.get("login.submit.css"));
 	
+	private By submissionStatus = By.xpath(LocatorsUtil.get("login.submission.successful.xpath"));
+	
 	public void insertUserDetails(String userName, String email, String UserCurtAddr, String UserPermAdrr, boolean shouldPass) {
-		eleUtils.type(fullName, userName, 5);
-		eleUtils.type(emailField, email, 5);
-		eleUtils.type(currentAddress, UserCurtAddr, 5);
-		eleUtils.type(permenantAddress, UserPermAdrr, 5);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		
+		eleUtils.type(fullName, userName, 10);
+		eleUtils.type(emailField, email, 10);
+		eleUtils.type(currentAddress, UserCurtAddr, 10);
+		eleUtils.type(permenantAddress, UserPermAdrr, 10);
 //		eleUtils.scrollTo(100);
-		eleUtils.clickWhenReady(submitButton, 5);
+		eleUtils.clickWhenReady(submitButton, 10);
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(submissionStatus));
 	}
 	
 
@@ -53,7 +63,7 @@ public class DataSetSubmissionPage {
 	}
 	
 	public boolean isFormSucceed() {
-        return eleUtils.isDisplayed(isFormSubmitted(), 5);
+        return eleUtils.isDisplayed(isFormSubmitted(), 10);
     }
 	
 	public boolean isEmailInvalid() {

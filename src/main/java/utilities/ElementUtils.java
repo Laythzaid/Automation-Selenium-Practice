@@ -71,8 +71,14 @@ public class ElementUtils {
 	}
 
 	public void clickWhenReady(By btnLocator, int TimeOut) {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TimeOut));
+				
+		
 		WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(btnLocator));
 		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(btnLocator));
+
 		((JavascriptExecutor) driver)
         .executeScript("arguments[0].scrollIntoView({block: 'center'});",  btn);
 		log.info("scrolled into view, element : " + btn );
@@ -81,15 +87,20 @@ public class ElementUtils {
 			btn.click();
 			log.info("Succesfully clicked on element: " + btnLocator);
 		} catch (Exception e) {
-			log.error("Error: Couldn't click element " + btnLocator);
-			throw new RuntimeException("Couldn't click button " + btnLocator, e);
+			log.warn("Normal click failed, trying JS click" + btnLocator);
+			
+			jsClick(btnLocator, TimeOut);
+			
+			log.info("js click excuted for:" + btnLocator);
 			
 		}
 
 	}
 
 	public void type(By locator, String Text, int TimeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TimeOut));
 		try {
+			driver.findElement(locator).clear();
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(Text);
 			log.info("typed: " + Text + " In " + locator);
 		} catch (Exception e) {
@@ -100,6 +111,7 @@ public class ElementUtils {
 	}
 
 	public void jsClick(By locators, int timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		WebElement locs = wait.until(ExpectedConditions.visibilityOfElementLocated(locators));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", locs);
